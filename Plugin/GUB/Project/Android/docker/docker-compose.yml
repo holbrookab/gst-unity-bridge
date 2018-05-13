@@ -17,5 +17,6 @@ services:
       MOUNT_LIB_GST_ANDROID:      /mnt/libgstreamer_android.so
     #entrypoint: /bin/bash
     volumes:
+      - /root/gst-unity-bridge:/mnt/gst-unity-bridge
       - ../../../../../:/mnt/immersiatv-player:ro
-      - ../../../Build/Android:/mnt/output
+      - /root/output:/mnt/output

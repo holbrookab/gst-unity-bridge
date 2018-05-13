@@ -51,7 +51,7 @@ static void gst_debug_gub(GstDebugCategory * category, GstDebugLevel level,
 
     switch (level) {
     case GST_LEVEL_ERROR:
-        level_str = "ERR";
+        level_str = "ERR DREW";
         break;
     case GST_LEVEL_WARNING:
         level_str = "WRN";
@@ -121,22 +121,25 @@ EXPORT_API void gub_ref(const char *gst_debug_string)
         if (gst_debug_string) {
             gub_log("Setting debug level to %s", gst_debug_string);
             gst_debug_set_active(TRUE);
-            gst_debug_set_threshold_from_string(gst_debug_string, TRUE);
+            gub_log("Set active");
+	    gst_debug_set_threshold_from_string(gst_debug_string, TRUE);
         } else {
             gst_debug_set_active(FALSE);
         }
 
 #if defined (__ANDROID__)
-        gst_android_register_static_plugins();
-        gst_android_load_gio_modules();
+	gub_log("Set active register");
+        //gst_android_register_static_plugins();
+	gub_log("Set active - load gio modules");
+        //gst_android_load_gio_modules();
 #endif
-
+	gub_log("New main thread");
         gub_main_loop_thread = g_thread_new("GstUnityBridge Main Thread", gub_main_loop_func, NULL);
         if (!gub_main_loop_thread) {
             gub_log("Failed to create GLib main thread: %s", err ? err->message : "<No error message>");
             return;
         }
-
+        gub_log("Set active version");
         version = gst_version_string();
         gub_log("%s initialized", version);
         g_free(version);

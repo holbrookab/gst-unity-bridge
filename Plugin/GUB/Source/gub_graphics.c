@@ -536,6 +536,7 @@ static GUBGraphicContext *gub_create_graphic_context_egl(GstPipeline *pipeline, 
     GstGLContext *gl_context;
     GUBGraphicContextEGL *gcontext;
 
+    gub_log("Attempting to get context");
     raw_context = gst_gl_context_get_current_gl_context(GST_GL_PLATFORM_EGL);
     if (!raw_context) {
         gub_log("Could not retrieve current EGL context");
@@ -634,7 +635,7 @@ static void gub_destroy_graphic_context_egl(GUBGraphicContextEGL *gcontext)
 
 static const gchar *gub_get_video_branch_description_egl()
 {
-    return "glupload ! glcolorconvert ! video/x-raw(memory:GLMemory),texture-target=2D ! fakesink sync=1 qos=1 name=sink";
+    return "glupload ! glcolorconvert ! video/x-raw(memory:GLMemory),texture-target=2D ! fakesink sync=false name=sink";
 }
 
 GUBGraphicBackend gub_graphic_backend_egl = {

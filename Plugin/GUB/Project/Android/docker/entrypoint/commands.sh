@@ -10,7 +10,7 @@ function copyRepo
 				  Plugin/DvbCssWc/Project/Android
                   Plugin/Externals/gstreamer/Project/Android
                  )
-
+  ls
   cd ${MOUNT_GST_UNITY_BRIDGE}
   find -type d -exec mkdir -p "$DOCKER_GST_UNITY_BRIDGE/{}" \;
   for i in "${arr[@]}"

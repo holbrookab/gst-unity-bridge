@@ -28,7 +28,7 @@
 #include "gub.h"
 #include "gub_pipeline.h"
 
-#define MAX_JITTERBUFFER_DELAY_MS 40
+#define MAX_JITTERBUFFER_DELAY_MS 20
 #define MAX_PIPELINE_DELAY_MS 500
 
 struct _GUBPipeline {
@@ -183,10 +183,11 @@ static gboolean select_stream(GstBin *rtspsrc, guint num, GstCaps *caps, GUBPipe
 static void source_created(GstBin *playbin, GstElement *source, GUBPipeline *pipeline)
 {
     gub_log_pipeline(pipeline, "Setting properties to source %s", gst_plugin_feature_get_name(gst_element_get_factory(source)));
-    g_object_set(source, "latency", MAX_JITTERBUFFER_DELAY_MS, NULL);
-    g_object_set(source, "ntp-time-source", 3, NULL);
-    g_object_set(source, "buffer-mode", 4, NULL);
-    g_object_set(source, "ntp-sync", TRUE, NULL);
+    //g_object_set(source, "latency", MAX_JITTERBUFFER_DELAY_MS, NULL);
+    //g_object_set(source, "ntp-time-source", 3, NULL);
+    //g_object_set(source, "buffer-mode", 4, NULL);
+    //g_object_set(source, "is-live", TRUE, NULL);
+    //g_object_set(source, "ntp-sync", TRUE, NULL);
 
     g_signal_connect(source, "select-stream", G_CALLBACK(select_stream), pipeline);
 }
@@ -306,6 +307,8 @@ EXPORT_API void gub_pipeline_setup_decoding_clock(GUBPipeline *pipeline, const g
     }
 
     full_pipeline_description = g_strdup_printf("playbin3 uri=%s", uri);
+//    full_pipeline_description = g_strdup_printf("rtspsrc location=%s", uri);
+
     gub_log_pipeline(pipeline, "Using pipeline: %s", full_pipeline_description);
 
     pipeline->pipeline = gst_parse_launch(full_pipeline_description, &err);
