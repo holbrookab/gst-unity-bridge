@@ -41,6 +41,7 @@ Compile GUB for Android:
 
 In ``docker/docker-compose.yml`` is configuration for building and running docker image.  
 If you don't want to use default settings, you can modify this file.
+** You will need to modify the file to specify where the `gst-unity-bridge` repo directory is on your build machine to link it to the docker volume **
 
 ----------
 
